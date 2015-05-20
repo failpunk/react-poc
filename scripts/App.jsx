@@ -1,37 +1,25 @@
 import React from 'react';
 import Router from 'react-router';
-import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
+import { DefaultRoute, Link, Route, RouteHandler, State } from 'react-router';
 
+import TopNav from  './TopNav.jsx';
 import HomePage from './components/Home.jsx';
-import LoginPage from './components/Login.jsx';
+import SettingsPage from './components/Settings.jsx';
+import ControlsPage from './components/Controls.jsx';
 
+import user from './userData.js';
+
+if (typeof window !== 'undefined') {
+  window.React = React;
+}
+
+console.log(user);
 let App = React.createClass({
   render() {
     return (
       <div>
-        <nav className="navbar navbar-inverse navbar-fixed-top">
-          <div className="container">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand" href="#">Project name</a>
-            </div>
-            <div id="navbar" className="collapse navbar-collapse">
-              <ul className="nav navbar-nav">
-                <li className="active">
-                  <Link to="app">Home</Link>
-                </li>
-                <li>
-                  <Link to="login">Login</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+
+        <TopNav/>
 
         {/* this is the importTant part */}
         <div className="container">
@@ -45,11 +33,21 @@ let App = React.createClass({
 
 let routes = (
   <Route name="app" path="/" handler={App}>
-    <Route name="login" path="/login" handler={LoginPage}/>
+    <Route name="settings" path="/settings" handler={SettingsPage} data={user}/>
+    <Route name="controls" path="/controls" handler={ControlsPage}/>
     <DefaultRoute handler={HomePage}/>
   </Route>
 );
 
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('root'));
+function fetchData(routes, params) {
+  return Promise.resolve(user);
+}
+
+Router.run(routes, function (Handler, state) {
+  console.log('Router State:', state);
+
+  fetchData(state.routes, state.params).then((data) => {
+    console.info('Promose Data: ', data);
+    React.render(<Handler data={data}/>, document.getElementById('root'));
+  });
 });

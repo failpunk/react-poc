@@ -1,7 +1,41 @@
 body {
     padding-top: 50px;
 }
+
 .starter-template {
     padding: 40px 15px;
     text-align: center;
+}
+
+.styled-radio-area {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.styled-radio-area li {
+    padding: 22px 30px;
+    margin: 0 0 10px;
+}
+
+.styled-radio-area li.active {
+    background-color: #efefef;
+    border-radius: 5px;
+}
+
+.styled-radio-area li label {
+    text-transform: none;
+    font-weight: 400;
+}
+
+.styled-radio-area li label h5 {
+    font-size: 16px;
+    text-transform: capitalize;
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.styled-radio-area li label p {
+    font-size: 13px;
+    letter-spacing: 0;
 }

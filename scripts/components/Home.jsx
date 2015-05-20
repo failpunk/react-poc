@@ -4,7 +4,7 @@ let Home = React.createClass({
 
   render() {
     return(
-      <div class="starter-template">
+      <div className="starter-template">
         <h1>Home Page</h1>
       </div>
     );
